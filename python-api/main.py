@@ -1,15 +1,30 @@
+# main.py
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from mangum import Mangum
+from rich.traceback import install
 
+# Load environment variables
 load_dotenv()
 
-app = FastAPI()
+# Pretty traceback for debugging
+install(show_locals=True)
 
-# Allow multiple origins (local + S3 later)
-origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
+# Create the FastAPI app
+app = FastAPI(
+    title="CodeLens API",
+    description="An API that analyses code using Gemini AI and explains bugs or fixes.",
+    version="1.0.0",
+)
+
+# Allow multiple origins (configure for prod later)
+origins = [
+    o.strip()
+    for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+    if o.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,22 +33,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Health + Root Routes ---
 @app.get("/")
 def root():
-    return {"service": "codelens-api", "status": "ok", "routes": ["/health", "/investigate", "/docs"]}
+    """Simple root endpoint for quick service check."""
+    return {
+        "service": "codelens-api",
+        "status": "ok",
+        "routes": ["/health", "/investigate", "/docs"],
+    }
 
 @app.get("/health")
 def health():
+    """Health check endpoint."""
     return {"status": "ok"}
 
-# (stub) input capture endpoint – wire frontend now; add Gemini next
-from pydantic import BaseModel
-class AnalyzeIn(BaseModel):
-    code: str
+# --- Import and include routes ---
+from routes import gemini_investigate
+app.include_router(gemini_investigate.router)
 
-@app.post("/investigate")
-def investigate(p: AnalyzeIn):
-    return {"received": len(p.code), "preview": p.code[:120]}
-
-# Lambda adapter (for later deploy)
+# --- AWS Lambda adapter (optional for deployment) ---
 lambda_handler = Mangum(app)
