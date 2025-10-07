@@ -12,3 +12,11 @@ __pycache__/
 .DS_Store
 # Build artifacts
 *.zip
+# Editors
+.vscode/
+.idea/
+# Python extras
+.pytest_cache/
+.coverage
+# Logs
+*.log
