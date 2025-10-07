@@ -2,18 +2,19 @@
 import React from "react";
 
 const variants = {
-  primary: "bg-[#85FF58] text-black rounded-none hover:rounded-md",
+  primary: "bg-[#85FF58] text-black rounded-none hover:rounded-xl",
   ghost:   "bg-[#2B2B2B] text-[#85FF58]/50 border-[#85FF58]/50 ",
 };
 
 const sizes = {
   sm: "h-8 px-3 text-sm",
   md: "h-10 px-4 text-sm",
-  lg: "h-12 px-5 text-base",
+  lg: "h-16 px-8 text-base text-lg font-semibold",
 };
 
 export default function Button({
   children,
+  text = "Button Text",
   variant = "primary",
   size = "lg",
   fullWidth = false,
@@ -50,6 +51,7 @@ export default function Button({
         />
       )}
       {children}
+      {text}
     </button>
   );
 }

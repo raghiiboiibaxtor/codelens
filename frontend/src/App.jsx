@@ -10,9 +10,11 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
+  <>
    <CodeBlock></CodeBlock>
-    </>
+   <Button text='Investigate' size='lg'></Button>
+
+  </>
   )
 }
 
