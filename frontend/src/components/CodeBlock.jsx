@@ -16,7 +16,7 @@ const CodeBlock = forwardRef(function CodeBlock(
     <div className={`flex flex-col gap-2 ${className}`}>
       <div className="flex items-center justify-between">
         <label className="text-sm font-medium">{label}</label>
-        <div className="flex gap-2">{actions}</div>
+       
       </div>
 
       {kind === "input" ? (
@@ -35,6 +35,7 @@ const CodeBlock = forwardRef(function CodeBlock(
           </code>
         </pre>
       )}
+       <div className="flex gap-2">{actions}</div>
     </div>
   );
 });

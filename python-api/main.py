@@ -1,17 +1,14 @@
 import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+from mangum import Mangum
 
-# Declaring FastAPI route for python backend functionality
+load_dotenv()
+
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[os.getenv("ALLOWED_ORIGIN", "*")],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
-# Allowing multiple hosting origins (local/live)
+# Allow multiple origins (local + S3 later)
 origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
 
 app.add_middleware(
@@ -29,6 +26,14 @@ def root():
 def health():
     return {"status": "ok"}
 
-# Lambda adapter
-from mangum import Mangum
+# (stub) input capture endpoint – wire frontend now; add Gemini next
+from pydantic import BaseModel
+class AnalyzeIn(BaseModel):
+    code: str
+
+@app.post("/investigate")
+def investigate(p: AnalyzeIn):
+    return {"received": len(p.code), "preview": p.code[:120]}
+
+# Lambda adapter (for later deploy)
 lambda_handler = Mangum(app)
