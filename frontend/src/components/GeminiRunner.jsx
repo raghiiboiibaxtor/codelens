@@ -17,7 +17,7 @@ export default function GeminiRunner() {
     setOutput(null);
 
     if (!input.trim()) {
-      setError("I'm hungry, there's no code to chew on. Paste some code in the box above.");
+      setError("I'm hungry! Paste some python code in the box above 🤤🐍");
       setLoading(false);
       return;
     }
@@ -54,13 +54,13 @@ export default function GeminiRunner() {
           parsed = data;
         }
       } catch {
-        parsed = { error: "Failed to parse Gemini’s response." };
+        parsed = { error: "Ouch, Gemini sucker punched me 🥊🥲 Try again?" };
       }
 
       // 3️⃣ Update UI
       setOutput(parsed);
     } catch (e) {
-      setError(e.message || "Something went wrong.");
+      setError(e.message || "Shucks! Something's up.");
     } finally {
       setLoading(false);
     }
@@ -73,18 +73,21 @@ export default function GeminiRunner() {
   }
 
   return (
-    <section className="w-full flex flex-col gap-6 text-zinc-100">
+    <section className="w-full flex flex-col lg:flex-row gap-6 text-stone-200">
       {/* Input box */}
-      <div className="flex flex-col gap-2">
-        <label className="text-sm font-medium text-zinc-400">
-          Input your Python code
+      <div className="flex flex-col gap-2 min-w-2xl max-w-4xl min-h-[500px] max-h-full">
+        <label className="text-sm font-medium text-stone-400">
+          <span class="font-bold text-stone-200">Step 1:</span> Add your broken Python code 👇❤️‍🩹
+        </label>
+        <label className="text-sm font-medium text-stone-400">
+          <span class="font-bold text-stone-200">Step 2:</span> Click Investigate 🕵️‍♂️🧩
         </label>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Paste or type code here..."
-          className="min-h-[280px] w-full rounded-md border border-zinc-800 bg-[#1E1E1E]
-                     text-zinc-100 placeholder-zinc-500 p-3 font-mono text-sm
+          className="min-h-[400px] w-full rounded-md border border-zinc-800 bg-[#1E1E1E]
+                     text-stone-200 placeholder-zinc-500 p-3 font-mono text-sm
                      outline-none focus:ring-1 focus:ring-[#85FF58]/20"
         />
 
@@ -107,10 +110,14 @@ export default function GeminiRunner() {
       </div>
 
       {/* Output Section */}
-      <div className="border border-zinc-800 rounded-md bg-zinc-900 p-4 min-h-[280px]">
-        <h3 className="text-lg font-semibold text-[#85FF58] mb-2 flex items-center gap-1">
-          <span role="img" aria-label="brain">🧠</span> Gemini Analysis
-        </h3>
+       <div className="flex flex-col gap-2 min-w-2xl max-w-4xl min-h-[500px] max-h-full">
+       <label className="text-sm font-medium text-stone-400">
+            <span class="font-bold text-stone-200">Step 3:</span> Grab your dreamy code & go! 🛸💫
+        </label>
+         <label className="text-sm font-medium text-stone-400">
+           --
+        </label>
+      <div className="  rounded-md border border-zinc-800 bg-[#1E1E1E] p-4 min-h-[500px] max-h-full min-w-2xl max-w-4xl">
 
         {error && (
           <div className="p-3 rounded-md bg-red-900/40 border border-red-700 text-red-200">
@@ -119,7 +126,7 @@ export default function GeminiRunner() {
         )}
 
         {!error && loading && (
-          <p className="text-zinc-500 italic">Thinking... crunching your code...</p>
+          <p className="text-zinc-500 italic">Chatting to Gemini 💬♊️ </p>
         )}
 
         {!loading && !error && output && (
@@ -167,8 +174,9 @@ export default function GeminiRunner() {
         )}
 
         {!loading && !error && !output && (
-          <p className="text-zinc-500 italic">Awaiting input...</p>
+          <p className="text-zinc-500 italic">Incoming! 🚀💫</p>
         )}
+      </div>
       </div>
     </section>
   );

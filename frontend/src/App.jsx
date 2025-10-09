@@ -1,6 +1,7 @@
 // src/App.jsx
 import GeminiRunner from "./components/GeminiRunner.jsx";
 import Header from "./components/Header.jsx";
+import InputCodeBlock from "./components/InputCodeBlock.jsx";
 
 const API_URL = import.meta.env.DEV
   ? "http://127.0.0.1:8000"  // local backend when running `npm run dev`
@@ -18,17 +19,45 @@ async function checkBackend() { // Health check, Debugging purposes
 
 checkBackend();
 
+let input = `# routes/gemini_investigate.py
+from fastapi import APIRouter
+from pydantic import BaseModel
+from services.gemini_services import investigate_code
+
+router = APIRouter() # Connecting to FastAPI main function
+
+class AnalyseIn(BaseModel):
+    """
+    The request body model.
+    Expects a field called 'code' containing the user's Python source.
+    """
+    code: str
+
+
+@router.post("/investigate")
+def investigate(p: AnalyseIn):
+    print("Received code:", p.code)
+    """
+    Accepts code from the front-end, sends it off to Gemini for analysis,
+    and returns the findings – bugs, explanations, and suggested fixes.
+    """
+    result = investigate_code(p.code)
+    return result
+`;
+
 export default function App() {
   return (
-    <main className="min-h-screen top-0 bg-[#181818] text-zinc-100 pt-0 pb-6 px-6 flex flex-col items-center">
+    <main className="min-h-screen top-0 bg-[#181818] text-[#EBEBEB] pt-0 pb-6 px-6 flex flex-col items-center align-center w-full">
       <Header/>
-      <p className="text-zinc-400 mb-8 text-center max-w-xl">
-        Paste your Python code below and let Gemini find bugs, fix them, and give you a tip.
+      <p className="text-stone-400 mb-8 text-center max-w-2xl">
+        Paste your buggy Python code and let Codelens investigate and solve your problems.
       </p>
 
-      <div className="w-full max-w-5xl">
+      <div className="w-full max-w-full p-20 ">
         <GeminiRunner />
+       
       </div>
+       <InputCodeBlock title="Input Code" language="python" code={input}/>
     </main>
   );
 }
