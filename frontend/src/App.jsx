@@ -47,17 +47,11 @@ def investigate(p: AnalyseIn):
 
 export default function App() {
   return (
-    <main className="min-h-screen top-0 bg-[#181818] text-[#EBEBEB] pt-0 pb-6 px-6 flex flex-col items-center align-center w-full">
+    <main className="min-h-screen top-0 bg-[#181818] text-[#EBEBEB] pt-0 pb-6 flex flex-col items-center min-w-screen">
       <Header/>
-      <p className="text-stone-400 mb-8 text-center max-w-2xl">
-        Paste your buggy Python code and let Codelens investigate and solve your problems.
-      </p>
-
-      <div className="w-full max-w-full p-20 ">
+      <div className="w-full max-w-full px-20 ">
         <GeminiRunner />
-       
       </div>
-       <InputCodeBlock title="Input Code" language="python" code={input}/>
     </main>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 bg-inherit w-full py-5 mb-10 flex flex-col md:flex-row sm:items-left lg:items-center justify-between gap-4 border-b border-gray-100/10 text-stone-400 font-[Montserrat]">
+    <header className="sticky top-0 bg-[#121212] min-w-full py-5 px-8 mb-10 flex flex-col md:flex-row sm:items-left lg:items-center justify-between gap-4 border-b border-gray-100/10 text-stone-400 font-[Montserrat]">
       {/* Left: Logo + Title */}
       <div className="flex items-center gap-2">
         <img
