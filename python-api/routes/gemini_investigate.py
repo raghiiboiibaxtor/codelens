@@ -15,6 +15,7 @@ class AnalyseIn(BaseModel):
 
 @router.post("/investigate")
 def investigate(p: AnalyseIn):
+    print("Received code:", p.code)
     """
     Accepts code from the front-end, sends it off to Gemini for analysis,
     and returns the findings – bugs, explanations, and suggested fixes.

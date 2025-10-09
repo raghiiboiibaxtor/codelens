@@ -7,7 +7,9 @@ export default function GeminiRunner() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const API = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+  const API = import.meta.env.DEV
+  ? "http://127.0.0.1:8000"               // dev access
+  : import.meta.env.VITE_API_URL; // live backend on Render 
 
   async function handleInvestigate() {
     setError("");

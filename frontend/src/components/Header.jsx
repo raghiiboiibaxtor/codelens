@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <header className="w-full pb-5 mb-10 flex flex-col md:flex-row sm:items-left lg:items-center justify-between gap-4 border-b border-gray-100/10 text-white font-[Montserrat]">
+    <header className="sticky top-0 bg-inherit w-full py-5 mb-10 flex flex-col md:flex-row sm:items-left lg:items-center justify-between gap-4 border-b border-gray-100/10 text-white font-[Montserrat]">
       {/* Left: Logo + Title */}
       <div className="flex items-center gap-2">
         <img
@@ -21,14 +21,22 @@ export default function Header() {
       </div>
 
       {/* Right: GitHub Link */}
-      <div>
-        <a
-          href="https://github.com/raghiiboiibaxtor"
+      <div class="space-x-8">
+         <a
+          href="https://github.com/raghiiboiibaxtor/codelens"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm lg:text-md font-light lg:font-medium"
+          className="text-sm lg:text-sm font-light lg:font-medium"
         >
-          <span className="hover:underline">Built by: Raghiiboii Baxtor</span>
+          <span className="underline hover:italic">GitHub</span>
+        </a>
+           <a
+          href="https://rbxtr.web.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sm lg:text-sm font-light lg:font-medium "
+        > 
+          <span className="underline hover:italic ml-2">@Raghiiboii Baxtor</span>
         </a>
       </div>
     </header>
